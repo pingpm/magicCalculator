@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>生成图标</title>
+</head>
+<body>
+    <h2>右键点击图片，保存为 icon.png</h2>
+    <canvas id="canvas" width="512" height="512"></canvas>
+    <script>
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        
+        // 创建渐变背景
+        const gradient = ctx.createLinearGradient(0, 0, 0, 512);
+        gradient.addColorStop(0, '#FF9F0A');
+        gradient.addColorStop(1, '#FF8C00');
+        
+        // 绘制圆角矩形背景
+        ctx.fillStyle = gradient;
+        roundRect(ctx, 0, 0, 512, 512, 115);
+        ctx.fill();
+        
+        // 绘制按钮
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.95)';
+        
+        // 第一行
+        roundRect(ctx, 80, 120, 100, 100, 50);
+        ctx.fill();
+        roundRect(ctx, 206, 120, 100, 100, 50);
+        ctx.fill();
+        roundRect(ctx, 332, 120, 100, 100, 50);
+        ctx.fill();
+        
+        // 第二行
+        roundRect(ctx, 80, 246, 100, 100, 50);
+        ctx.fill();
+        roundRect(ctx, 206, 246, 100, 100, 50);
+        ctx.fill();
+        roundRect(ctx, 332, 246, 100, 100, 50);
+        ctx.fill();
+        
+        // 第三行
+        roundRect(ctx, 80, 372, 226, 100, 50);
+        ctx.fill();
+        roundRect(ctx, 332, 372, 100, 100, 50);
+        ctx.fill();
+        
+        function roundRect(ctx, x, y, width, height, radius) {
+            ctx.beginPath();
+            ctx.moveTo(x + radius, y);
+            ctx.lineTo(x + width - radius, y);
+            ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
+            ctx.lineTo(x + width, y + height - radius);
+            ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
+            ctx.lineTo(x + radius, y + height);
+            ctx.quadraticCurveTo(x, y + height, x, y + height - radius);
+            ctx.lineTo(x, y + radius);
+            ctx.quadraticCurveTo(x, y, x + radius, y);
+            ctx.closePath();
+        }
+    </script>
+</body>
+</html>

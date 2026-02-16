@@ -1,0 +1,17 @@
+{
+  "name": "magic-calculator",
+  "version": "1.0.0",
+  "description": "一个用于魔术表演的特殊计算器 PWA 应用",
+  "scripts": {
+    "start": "npx serve",
+    "dev": "npx serve"
+  },
+  "keywords": [
+    "calculator",
+    "magic",
+    "pwa",
+    "ios"
+  ],
+  "author": "",
+  "license": "MIT"
+}
