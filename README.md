@@ -124,6 +124,27 @@ cd magic-calculator
 - 解压到本地文件夹
 - 进入项目目录
 
+### 生成图标（重要！）
+
+在启动前，需要先生成图标文件：
+
+1. 在浏览器中打开 `icon-generator.html`
+2. 点击"下载 icon.png"按钮
+3. 将下载的文件保存到项目根目录
+4. （可选）也下载 icon-192.png
+
+或者使用命令行（需要 ImageMagick）：
+```bash
+# macOS
+brew install imagemagick
+convert icon.svg -resize 512x512 icon.png
+convert icon.svg -resize 192x192 icon-192.png
+
+# 或者直接运行脚本
+chmod +x create-icon.sh
+./create-icon.sh
+```
+
 ### 本地测试
 
 **方法 1：使用 Python（最简单）**

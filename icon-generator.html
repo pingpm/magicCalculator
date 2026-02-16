@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>生成图标</title>
+    <style>
+        body {
+            font-family: -apple-system, sans-serif;
+            padding: 40px;
+            background: #f5f5f5;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h2 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+        canvas {
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        button {
+            background: #007AFF;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+        button:hover {
+            background: #0051D5;
+        }
+        .instructions {
+            background: #f9f9f9;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+            line-height: 1.6;
+        }
+        .instructions code {
+            background: #e0e0e0;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: monospace;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>📱 生成计算器图标</h2>
+        <canvas id="canvas" width="512" height="512"></canvas>
+        <div>
+            <button onclick="downloadIcon()">下载 icon.png</button>
+            <button onclick="downloadIcon192()">下载 icon-192.png</button>
+        </div>
+        
+        <div class="instructions">
+            <strong>使用说明：</strong><br>
+            1. 点击"下载 icon.png"按钮<br>
+            2. 将下载的文件保存到项目根目录<br>
+            3. 刷新浏览器，图标就会显示了<br>
+            4. 可选：也下载 icon-192.png 用于更好的兼容性
+        </div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        
+        function drawIcon() {
+            // 创建渐变背景
+            const gradient = ctx.createLinearGradient(0, 0, 0, 512);
+            gradient.addColorStop(0, '#FF9F0A');
+            gradient.addColorStop(1, '#FF8C00');
+            
+            // 绘制圆角矩形背景
+            roundRect(ctx, 0, 0, 512, 512, 115);
+            ctx.fillStyle = gradient;
+            ctx.fill();
+            
+            // 绘制按钮
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.95)';
+            
+            // 第一行
+            roundRect(ctx, 80, 120, 100, 100, 50);
+            ctx.fill();
+            roundRect(ctx, 206, 120, 100, 100, 50);
+            ctx.fill();
+            roundRect(ctx, 332, 120, 100, 100, 50);
+            ctx.fill();
+            
+            // 第二行
+            roundRect(ctx, 80, 246, 100, 100, 50);
+            ctx.fill();
+            roundRect(ctx, 206, 246, 100, 100, 50);
+            ctx.fill();
+            roundRect(ctx, 332, 246, 100, 100, 50);
+            ctx.fill();
+            
+            // 第三行
+            roundRect(ctx, 80, 372, 226, 100, 50);
+            ctx.fill();
+            roundRect(ctx, 332, 372, 100, 100, 50);
+            ctx.fill();
+        }
+        
+        function roundRect(ctx, x, y, width, height, radius) {
+            ctx.beginPath();
+            ctx.moveTo(x + radius, y);
+            ctx.lineTo(x + width - radius, y);
+            ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
+            ctx.lineTo(x + width, y + height - radius);
+            ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
+            ctx.lineTo(x + radius, y + height);
+            ctx.quadraticCurveTo(x, y + height, x, y + height - radius);
+            ctx.lineTo(x, y + radius);
+            ctx.quadraticCurveTo(x, y, x + radius, y);
+            ctx.closePath();
+        }
+        
+        function downloadIcon() {
+            canvas.toBlob(blob => {
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'icon.png';
+                a.click();
+                URL.revokeObjectURL(url);
+            });
+        }
+        
+        function downloadIcon192() {
+            // 创建 192x192 的 canvas
+            const smallCanvas = document.createElement('canvas');
+            smallCanvas.width = 192;
+            smallCanvas.height = 192;
+            const smallCtx = smallCanvas.getContext('2d');
+            
+            // 缩放绘制
+            smallCtx.drawImage(canvas, 0, 0, 192, 192);
+            
+            smallCanvas.toBlob(blob => {
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'icon-192.png';
+                a.click();
+                URL.revokeObjectURL(url);
+            });
+        }
+        
+        // 初始化绘制
+        drawIcon();
+    </script>
+</body>
+</html>
